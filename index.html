@@ -1,214 +1,1076 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Genji - Overwatch</title>
-  <!-- Google Fonts for futuristic style -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
-  <style>
-    /* Reset and base */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background-color: #0a0a0a;
-      color: #ccc;
-      font-family: 'Orbitron', sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-    a {
-      color: #00ff00;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    a:hover {
-      color: #66ff66;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genji.lol — Overwatch Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ow-orange: #F47A20;
+    --ow-blue: #00A8E8;
+    --ow-dark: #0A0C10;
+    --ow-panel: #111620;
+    --ow-surface: #181E2A;
+    --ow-border: rgba(255,255,255,0.08);
+    --ow-text: #E8EAF0;
+    --ow-muted: #7A8099;
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --tank: #4A90D9;
+    --damage: #E04040;
+    --support: #4DB86A;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ow-dark);
+    color: var(--ow-text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
 
-    /* Container and layout */
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-      border-bottom: 2px solid #00ff00;
-      padding-bottom: 20px;
-    }
-    header h1 {
-      font-size: 3rem;
-      color: #00ff00;
-      letter-spacing: 4px;
-      text-shadow: 0 0 10px #00ff00;
-    }
-    header p {
-      font-size: 1.2rem;
-      color: #66ff66;
-      margin-top: 8px;
-      font-style: italic;
-    }
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,12,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--ow-border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.6rem; font-weight: 800; letter-spacing: 0.08em;
+    color: #fff; text-decoration: none;
+  }
+  .nav-logo span { color: var(--ow-orange); }
+  .nav-links { display: flex; gap: 0.25rem; }
+  .nav-link {
+    font-family: var(--font-display); font-weight: 600; font-size: 0.9rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ow-muted); text-decoration: none;
+    padding: 0.4rem 0.85rem; border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .nav-link:hover { color: #fff; background: rgba(255,255,255,0.06); }
+  .nav-link.active { color: var(--ow-orange); }
 
-    /* Genji mask icon (SVG) */
-    .genji-icon {
-      width: 120px;
-      margin: 0 auto 30px;
-      display: block;
-      filter: drop-shadow(0 0 5px #00ff00);
-    }
+  /* HERO SECTION */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    background: linear-gradient(180deg, #0d1120 0%, var(--ow-dark) 100%);
+    border-bottom: 1px solid var(--ow-border);
+  }
+  .hero-accent {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ow-orange), transparent);
+  }
+  .hero-eyebrow {
+    font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ow-orange); margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: var(--font-display); font-weight: 800; font-size: clamp(3rem, 7vw, 5.5rem);
+    letter-spacing: 0.04em; text-transform: uppercase; line-height: 0.95;
+    color: #fff; margin-bottom: 1.25rem;
+  }
+  .hero h1 em { font-style: normal; color: var(--ow-orange); }
+  .hero p {
+    font-size: 1.05rem; color: var(--ow-muted);
+    max-width: 520px; margin: 0 auto 2rem;
+  }
+  .hero-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.65rem 1.75rem; border-radius: 4px;
+    text-decoration: none; transition: all 0.15s; cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--ow-orange); color: #fff;
+  }
+  .btn-primary:hover { background: #ff8c35; }
+  .btn-outline {
+    background: transparent; color: var(--ow-text);
+    border: 1px solid var(--ow-border);
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.25); color: #fff; }
 
-    /* Section styling */
-    section {
-      margin-bottom: 50px;
-      border-left: 4px solid #00ff00;
-      padding-left: 20px;
-    }
-    section h2 {
-      color: #00ff00;
-      margin-bottom: 15px;
-      text-shadow: 0 0 6px #00ff00;
-      font-size: 2rem;
-    }
-    section p {
-      font-size: 1.1rem;
-      color: #bbb;
-    }
+  /* STATS BAR */
+  .stats-bar {
+    display: flex; justify-content: center; gap: 0;
+    border-bottom: 1px solid var(--ow-border);
+    background: var(--ow-panel);
+  }
+  .stat-item {
+    flex: 1; max-width: 220px;
+    padding: 1.25rem 1.5rem; text-align: center;
+    border-right: 1px solid var(--ow-border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--font-display); font-weight: 800; font-size: 2rem;
+    color: var(--ow-orange); line-height: 1;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--ow-muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.06em; }
 
-    /* Abilities list */
-    .abilities {
-      list-style: none;
-      padding-left: 0;
-    }
-    .abilities li {
-      background: rgba(0, 255, 0, 0.1);
-      margin-bottom: 10px;
-      padding: 12px 15px;
-      border-radius: 6px;
-      border-left: 5px solid #00ff00;
-      color: #ccffcc;
-      font-weight: 600;
-      text-shadow: 0 0 4px #00ff00;
-    }
+  /* SECTIONS */
+  .section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-header { margin-bottom: 2.5rem; }
+  .section-tag {
+    font-family: var(--font-display); font-weight: 600; font-size: 0.8rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ow-orange); margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 3vw, 2.6rem);
+    letter-spacing: 0.04em; text-transform: uppercase; color: #fff;
+  }
+  .section-sub { color: var(--ow-muted); margin-top: 0.5rem; max-width: 560px; }
+  .divider { border: none; border-top: 1px solid var(--ow-border); }
 
-    /* Gallery grid */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
-    }
-    .gallery img {
-      width: 100%;
-      border-radius: 8px;
-      border: 2px solid #00ff00;
-      box-shadow: 0 0 8px #00ff00;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-    .gallery img:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 15px #66ff66;
-    }
+  /* ROLE FILTER */
+  .role-filter { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .filter-btn {
+    font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.4rem 1.1rem; border-radius: 3px; border: 1px solid var(--ow-border);
+    background: transparent; color: var(--ow-muted); cursor: pointer; transition: all 0.15s;
+  }
+  .filter-btn:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  .filter-btn.active-all { background: var(--ow-orange); color: #fff; border-color: var(--ow-orange); }
+  .filter-btn.active-tank { background: var(--tank); color: #fff; border-color: var(--tank); }
+  .filter-btn.active-damage { background: var(--damage); color: #fff; border-color: var(--damage); }
+  .filter-btn.active-support { background: var(--support); color: #fff; border-color: var(--support); }
 
-    /* Contact */
-    form {
-      max-width: 400px;
-      background: #111;
-      border: 1px solid #00ff00;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #00ff00;
-    }
-    form label {
-      display: block;
-      margin-bottom: 6px;
-      color: #00ff00;
-      font-weight: 600;
-    }
-    form input,
-    form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #00ff00;
-      background: #222;
-      color: #ccc;
-      border-radius: 5px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      resize: vertical;
-    }
-    form button {
-      background: #00ff00;
-      border: none;
-      padding: 12px 20px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #000;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s ease;
-    }
-    form button:hover {
-      background: #66ff66;
-    }
+  /* HERO CARDS GRID */
+  .heroes-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;
+  }
+  .hero-card {
+    background: var(--ow-panel); border: 1px solid var(--ow-border);
+    border-radius: 6px; overflow: hidden; cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s;
+    position: relative;
+  }
+  .hero-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.18); }
+  .hero-card.hidden { display: none; }
+  .hero-card-banner {
+    height: 110px; display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; position: relative; overflow: hidden;
+  }
+  .hero-card-body { padding: 0.9rem 1rem; }
+  .hero-name {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+    letter-spacing: 0.04em; text-transform: uppercase; color: #fff;
+  }
+  .hero-role-badge {
+    display: inline-block; margin-top: 0.35rem;
+    font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 0.2rem 0.55rem; border-radius: 3px;
+  }
+  .badge-tank { background: rgba(74,144,217,0.15); color: var(--tank); }
+  .badge-damage { background: rgba(224,64,64,0.15); color: var(--damage); }
+  .badge-support { background: rgba(77,184,106,0.15); color: var(--support); }
+  .hero-diff {
+    margin-top: 0.5rem; font-size: 0.78rem; color: var(--ow-muted);
+    display: flex; gap: 0.3rem; align-items: center;
+  }
+  .diff-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ow-muted); }
+  .diff-dot.filled { background: var(--ow-orange); }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #444;
-      font-size: 0.9rem;
-      border-top: 1px solid #222;
-      margin-top: 40px;
-    }
+  /* HERO MODAL */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.8); align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--ow-panel); border: 1px solid var(--ow-border);
+    border-radius: 8px; width: 100%; max-width: 640px; max-height: 90vh;
+    overflow-y: auto; position: relative;
+  }
+  .modal-header {
+    padding: 1.75rem 2rem 1.25rem;
+    border-bottom: 1px solid var(--ow-border);
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+  }
+  .modal-hero-icon { font-size: 3.5rem; line-height: 1; }
+  .modal-hero-name {
+    font-family: var(--font-display); font-weight: 800; font-size: 2.2rem;
+    letter-spacing: 0.04em; text-transform: uppercase; color: #fff;
+  }
+  .modal-close {
+    background: none; border: none; color: var(--ow-muted); font-size: 1.5rem;
+    cursor: pointer; line-height: 1; padding: 0.25rem; flex-shrink: 0;
+  }
+  .modal-close:hover { color: #fff; }
+  .modal-body { padding: 1.5rem 2rem; }
+  .modal-section-title {
+    font-family: var(--font-display); font-weight: 700; font-size: 0.8rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ow-orange);
+    margin-bottom: 0.75rem; margin-top: 1.5rem;
+  }
+  .modal-section-title:first-child { margin-top: 0; }
+  .ability-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .ability-item {
+    background: var(--ow-surface); border-radius: 5px;
+    padding: 0.75rem 1rem; display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .ability-key {
+    font-family: var(--font-display); font-weight: 700; font-size: 0.75rem;
+    letter-spacing: 0.06em; color: var(--ow-muted); min-width: 36px;
+    border: 1px solid var(--ow-border); border-radius: 3px;
+    padding: 0.15rem 0.4rem; text-align: center; margin-top: 0.1rem;
+  }
+  .ability-name { font-weight: 600; color: #fff; font-size: 0.9rem; }
+  .ability-desc { color: var(--ow-muted); font-size: 0.85rem; margin-top: 0.15rem; }
+  .tips-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .tip-item {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    color: var(--ow-muted); font-size: 0.88rem; line-height: 1.5;
+  }
+  .tip-bullet { color: var(--ow-orange); font-weight: 700; margin-top: 0.1rem; flex-shrink: 0; }
+  .counter-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .counter-tag {
+    background: var(--ow-surface); border: 1px solid var(--ow-border);
+    border-radius: 3px; padding: 0.3rem 0.75rem;
+    font-size: 0.8rem; font-family: var(--font-display); font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--ow-text);
+  }
 
-  </style>
+  /* LORE SECTION */
+  .lore-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  @media (max-width: 640px) { .lore-grid { grid-template-columns: 1fr; } }
+  .lore-card {
+    background: var(--ow-panel); border: 1px solid var(--ow-border);
+    border-radius: 6px; padding: 1.5rem; cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .lore-card:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-2px); }
+  .lore-card.featured {
+    grid-column: span 2; background: var(--ow-surface);
+    border-color: rgba(244,122,32,0.3);
+  }
+  @media (max-width: 640px) { .lore-card.featured { grid-column: span 1; } }
+  .lore-tag {
+    font-family: var(--font-display); font-weight: 600; font-size: 0.75rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ow-orange); margin-bottom: 0.5rem;
+  }
+  .lore-title {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.2rem;
+    letter-spacing: 0.03em; text-transform: uppercase; color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .lore-card.featured .lore-title { font-size: 1.55rem; }
+  .lore-desc { color: var(--ow-muted); font-size: 0.88rem; line-height: 1.6; }
+
+  /* LORE MODAL */
+  .lore-content { padding: 1.5rem 2rem; color: var(--ow-muted); line-height: 1.75; font-size: 0.92rem; }
+  .lore-content p { margin-bottom: 1rem; }
+  .lore-content p:last-child { margin-bottom: 0; }
+  .lore-content strong { color: var(--ow-text); font-weight: 600; }
+
+  /* MAPS SECTION */
+  .modes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+  .mode-card {
+    background: var(--ow-panel); border: 1px solid var(--ow-border);
+    border-radius: 6px; overflow: hidden;
+  }
+  .mode-header {
+    padding: 1.25rem 1.25rem 1rem;
+    border-bottom: 1px solid var(--ow-border);
+  }
+  .mode-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .mode-name {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
+    text-transform: uppercase; letter-spacing: 0.04em; color: #fff;
+  }
+  .mode-body { padding: 1rem 1.25rem; }
+  .mode-desc { color: var(--ow-muted); font-size: 0.87rem; line-height: 1.55; margin-bottom: 1rem; }
+  .map-chips { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .map-chip {
+    background: var(--ow-surface); border: 1px solid var(--ow-border);
+    border-radius: 3px; padding: 0.2rem 0.6rem;
+    font-size: 0.75rem; color: var(--ow-muted);
+  }
+
+  /* BEGINNER SECTION */
+  .beginner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  @media (max-width: 640px) { .beginner-grid { grid-template-columns: 1fr; } }
+  .tip-card {
+    background: var(--ow-panel); border: 1px solid var(--ow-border);
+    border-radius: 6px; padding: 1.5rem;
+  }
+  .tip-num {
+    font-family: var(--font-display); font-weight: 800; font-size: 2.5rem;
+    color: rgba(244,122,32,0.2); line-height: 1; margin-bottom: 0.75rem;
+  }
+  .tip-title {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+    text-transform: uppercase; letter-spacing: 0.04em; color: #fff; margin-bottom: 0.5rem;
+  }
+  .tip-text { color: var(--ow-muted); font-size: 0.87rem; line-height: 1.6; }
+
+  /* ROLES EXPLAINER */
+  .roles-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  @media (max-width: 560px) { .roles-row { grid-template-columns: 1fr; } }
+  .role-card {
+    background: var(--ow-panel); border-radius: 6px; padding: 1.25rem;
+    border-top: 3px solid transparent;
+  }
+  .role-card.tank { border-top-color: var(--tank); }
+  .role-card.damage { border-top-color: var(--damage); }
+  .role-card.support { border-top-color: var(--support); }
+  .role-icon { font-size: 1.75rem; margin-bottom: 0.5rem; }
+  .role-name {
+    font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.06em; color: #fff; margin-bottom: 0.4rem;
+  }
+  .role-desc { color: var(--ow-muted); font-size: 0.83rem; line-height: 1.5; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--ow-border); background: var(--ow-panel);
+    padding: 2rem; text-align: center; color: var(--ow-muted); font-size: 0.82rem;
+  }
+  footer strong { color: var(--ow-text); }
+</style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Genji</h1>
-      <img class="genji-icon" src="https://upload.wikimedia.org/wikipedia/en/c/c4/Genji_icon.png" alt="Genji Mask Icon" />
-      <p>The Cybernetic Ninja of Overwatch</p>
-    </header>
 
-    <section id="about">
-      <h2>About Genji</h2>
-      <p>
-        Genji Shimada is a cybernetic ninja with a sharp mind and deadly precision.
-        After a near-fatal encounter with his brother, he was saved by Overwatch's
-        medical team and enhanced with advanced cybernetic technology.
-        Now, he walks the path of balance, mastering both technology and his ninja heritage.
-      </p>
-    </section>
+<nav>
+  <a class="nav-logo" href="#">OW<span>Atlas</span></a>
+  <div class="nav-links">
+    <a class="nav-link" href="#heroes">Heroes</a>
+    <a class="nav-link" href="#lore">Lore</a>
+    <a class="nav-link" href="#maps">Maps</a>
+    <a class="nav-link" href="#beginner">Beginner</a>
+  </div>
+</nav>
 
-    <section id="abilities">
-      <h2>Abilities</h2>
-      <ul class="abilities">
-        <li>Shuriken: Throws three deadly throwing stars in quick succession.</li>
-        <li>Deflect: Reflects incoming projectiles back at enemies.</li>
-        <li>Swift Strike: Dashes forward, slicing enemies in his path.</li>
-        <li>Dragonblade (Ultimate): Unleashes a powerful melee attack with his katana.</li>
-      </ul>
-    </section>
+<!-- HERO BANNER -->
+<section class="hero">
+  <div class="hero-accent"></div>
+  <div class="hero-eyebrow">Your complete Overwatch guide</div>
+  <h1>Master <em>Every</em><br>Hero</h1>
+  <p>From first match to ranked play — hero breakdowns, lore deep dives, map guides, and beginner tips all in one place.</p>
+  <div class="hero-btns">
+    <a class="btn btn-primary" href="#heroes">Browse Heroes</a>
+    <a class="btn btn-outline" href="#beginner">New Player Guide</a>
+  </div>
+</section>
 
-    <section id="gallery">
-      <h2>Gallery</h2>
-      <div class="gallery">
-        <img src="https://static.wikia.nocookie.net/overwatch_gamepedia/images/2/2b/Genji-portrait.png" alt="Genji Portrait" />
-        <img src="https://static.wikia.nocookie.net/overwatch_gamepedia/images/4/4b/Genji_Artwork.png" alt="Genji Artwork" />
-        <img src="https://static.wikia.nocookie.net/overwatch_gamepedia/images/7/7b/Genji_Skin_Winter_Wonderland_2021.png" alt="Genji Skin" />
-        <img src="https://static.wikia.nocookie.net/overwatch_gamepedia/images/7/7a/Genji_in-game.png" alt="Genji In-Game" />
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">40+</div><div class="stat-label">Playable Heroes</div></div>
+  <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Roles</div></div>
+  <div class="stat-item"><div class="stat-num">20+</div><div class="stat-label">Maps</div></div>
+  <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Game Modes</div></div>
+</div>
+
+<!-- ===================== HEROES ===================== -->
+<hr class="divider" id="heroes">
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">Hero Guides</div>
+    <div class="section-title">Choose Your Hero</div>
+    <p class="section-sub">Every hero has unique abilities, playstyles, and counters. Filter by role to find your main.</p>
+  </div>
+
+  <div class="role-filter">
+    <button class="filter-btn active-all" onclick="filterHeroes('all', this)">All</button>
+    <button class="filter-btn" onclick="filterHeroes('tank', this)">🛡 Tank</button>
+    <button class="filter-btn" onclick="filterHeroes('damage', this)">⚔️ Damage</button>
+    <button class="filter-btn" onclick="filterHeroes('support', this)">💚 Support</button>
+  </div>
+
+  <div class="heroes-grid" id="heroGrid">
+    <!-- TANKS -->
+    <div class="hero-card" data-role="tank" onclick="openHero('reinhardt')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#1a2a4a,#2a4070);">⚔️</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Reinhardt</div>
+        <span class="hero-role-badge badge-tank">Tank</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot"></div><div class="diff-dot"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Easy</span>
+        </div>
       </div>
-    </section>
+    </div>
+    <div class="hero-card" data-role="tank" onclick="openHero('dva')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#3a1a3a,#602060);">🤖</div>
+      <div class="hero-card-body">
+        <div class="hero-name">D.Va</div>
+        <span class="hero-role-badge badge-tank">Tank</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot filled"></div><div class="diff-dot"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Medium</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card" data-role="tank" onclick="openHero('sigma')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#102030,#1c3a50);">🌀</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Sigma</div>
+        <span class="hero-role-badge badge-tank">Tank</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot filled"></div><div class="diff-dot filled"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Hard</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card" data-role="tank" onclick="openHero('winston')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#1e2030,#3a3c60);">🦍</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Winston</div>
+        <span class="hero-role-badge badge-tank">Tank</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot"></div><div class="diff-dot"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Easy</span>
+        </div>
+      </div>
+    </div>
 
-  <footer>
-    &copy; 2026 Genji Fan Page. Inspired by Overwatch. Made by @fwosen
-  </footer>
+    <!-- DAMAGE -->
+    <div class="hero-card" data-role="damage" onclick="openHero('tracer')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#2a1a00,#4a3000);">⚡</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Tracer</div>
+        <span class="hero-role-badge badge-damage">Damage</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot filled"></div><div class="diff-dot filled"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Hard</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card" data-role="damage" onclick="openHero('soldier76')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#0d1f1f,#1a3535);">🎯</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Soldier: 76</div>
+        <span class="hero-role-badge badge-damage">Damage</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot"></div><div class="diff-dot"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Easy</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card" data-role="damage" onclick="openHero('hanzo')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#150f00,#2a2000);">🏹</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Hanzo</div>
+        <span class="hero-role-badge badge-damage">Damage</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot filled"></div><div class="diff-dot filled"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Hard</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card" data-role="damage" onclick="openHero('pharah')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#0a1a30,#122a50);">🚀</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Pharah</div>
+        <span class="hero-role-badge badge-damage">Damage</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot filled"></div><div class="diff-dot"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Medium</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUPPORT -->
+    <div class="hero-card" data-role="support" onclick="openHero('ana')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#1a1000,#352000);">💉</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Ana</div>
+        <span class="hero-role-badge badge-support">Support</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot filled"></div><div class="diff-dot filled"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Hard</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card" data-role="support" onclick="openHero('lucio')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#0a2010,#102a18);">🎵</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Lúcio</div>
+        <span class="hero-role-badge badge-support">Support</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot filled"></div><div class="diff-dot"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Medium</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card" data-role="support" onclick="openHero('mercy')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#1a1a10,#2a2a18);">😇</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Mercy</div>
+        <span class="hero-role-badge badge-support">Support</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot"></div><div class="diff-dot"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Easy</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card" data-role="support" onclick="openHero('zenyatta')">
+      <div class="hero-card-banner" style="background: linear-gradient(135deg,#15100a,#251a10);">🔮</div>
+      <div class="hero-card-body">
+        <div class="hero-name">Zenyatta</div>
+        <span class="hero-role-badge badge-support">Support</span>
+        <div class="hero-diff">
+          <div class="diff-dot filled"></div><div class="diff-dot filled"></div><div class="diff-dot"></div>
+          <span style="font-size:0.75rem;margin-left:4px">Medium</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO MODAL -->
+<div class="modal-backdrop" id="heroModal" onclick="closeIfBackdrop(event, 'heroModal')">
+  <div class="modal" id="heroModalContent">
+    <div class="modal-header">
+      <div>
+        <div class="modal-hero-icon" id="mIcon"></div>
+        <div class="modal-hero-name" id="mName"></div>
+        <div id="mBadge" style="margin-top:0.4rem"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('heroModal')">✕</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<!-- ===================== LORE ===================== -->
+<hr class="divider" id="lore">
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">Lore & Story</div>
+    <div class="section-title">The World of Overwatch</div>
+    <p class="section-sub">A near-future Earth reshaped by the Omnic Crisis — and the heroes who rose to defend it.</p>
+  </div>
+
+  <div class="lore-grid">
+    <div class="lore-card featured" onclick="openLore('crisis')">
+      <div class="lore-tag">⭐ Start Here</div>
+      <div class="lore-title">The Omnic Crisis & the Birth of Overwatch</div>
+      <div class="lore-desc">When autonomous robots turned against humanity, the world needed heroes. Learn how the UN's strike team became a legendary peacekeeping force — and why they fell apart.</div>
+    </div>
+    <div class="lore-card" onclick="openLore('blackwatch')">
+      <div class="lore-tag">Faction</div>
+      <div class="lore-title">Blackwatch: The Shadow Ops</div>
+      <div class="lore-desc">The secret, deniable side of Overwatch. Covert ops, morally grey choices, and the seeds of the organization's downfall.</div>
+    </div>
+    <div class="lore-card" onclick="openLore('talon')">
+      <div class="lore-tag">Faction</div>
+      <div class="lore-title">Talon: The Terrorist Network</div>
+      <div class="lore-desc">A shadowy organization that believes conflict is necessary for human evolution. Their agents include Reaper, Widowmaker, and Doomfist.</div>
+    </div>
+    <div class="lore-card" onclick="openLore('omnics')">
+      <div class="lore-tag">Lore</div>
+      <div class="lore-title">Omnics & Sentient Machines</div>
+      <div class="lore-desc">Are omnics people? The central philosophical tension of Overwatch's universe — from Zenyatta's Iris to the Shambali monks.</div>
+    </div>
+    <div class="lore-card" onclick="openLore('timeline')">
+      <div class="lore-tag">Timeline</div>
+      <div class="lore-title">Key Events Timeline</div>
+      <div class="lore-desc">A chronological breakdown from the Omnic Crisis through the fall of Overwatch, the Null Sector uprising, and the current recall.</div>
+    </div>
+  </div>
+</div>
+
+<!-- LORE MODAL -->
+<div class="modal-backdrop" id="loreModal" onclick="closeIfBackdrop(event, 'loreModal')">
+  <div class="modal" id="loreModalContent">
+    <div class="modal-header">
+      <div>
+        <div class="modal-hero-name" id="lTitle" style="font-size:1.6rem"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('loreModal')">✕</button>
+    </div>
+    <div class="lore-content" id="lBody"></div>
+  </div>
+</div>
+
+<!-- ===================== MAPS & MODES ===================== -->
+<hr class="divider" id="maps">
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">Maps & Game Modes</div>
+    <div class="section-title">Know the Battleground</div>
+    <p class="section-sub">Every game mode has different objectives and strategies. Knowing the maps is half the battle.</p>
+  </div>
+
+  <div class="modes-grid">
+    <div class="mode-card">
+      <div class="mode-header">
+        <div class="mode-icon">🚚</div>
+        <div class="mode-name">Escort (Payload)</div>
+      </div>
+      <div class="mode-body">
+        <div class="mode-desc">Attack pushes the payload along a fixed track to the delivery point. Defense tries to stall until time runs out. Standing near the payload moves it faster.</div>
+        <div class="map-chips">
+          <span class="map-chip">Dorado</span>
+          <span class="map-chip">Route 66</span>
+          <span class="map-chip">Rialto</span>
+          <span class="map-chip">Junkertown</span>
+        </div>
+      </div>
+    </div>
+    <div class="mode-card">
+      <div class="mode-header">
+        <div class="mode-icon">🏆</div>
+        <div class="mode-name">Hybrid</div>
+      </div>
+      <div class="mode-body">
+        <div class="mode-desc">First capture a control point to unlock the payload, then escort it to the end. Two-phase objective that shifts the flow of a match dramatically.</div>
+        <div class="map-chips">
+          <span class="map-chip">King's Row</span>
+          <span class="map-chip">Blizzard World</span>
+          <span class="map-chip">Eichenwalde</span>
+          <span class="map-chip">Midtown</span>
+        </div>
+      </div>
+    </div>
+    <div class="mode-card">
+      <div class="mode-header">
+        <div class="mode-icon">📍</div>
+        <div class="mode-name">Control</div>
+      </div>
+      <div class="mode-body">
+        <div class="mode-desc">Best-of-three. Teams fight to capture and hold a single central point until the percentage hits 100. Intense teamfight-focused rounds with no time limit.</div>
+        <div class="map-chips">
+          <span class="map-chip">Lijiang Tower</span>
+          <span class="map-chip">Nepal</span>
+          <span class="map-chip">Oasis</span>
+          <span class="map-chip">Ilios</span>
+        </div>
+      </div>
+    </div>
+    <div class="mode-card">
+      <div class="mode-header">
+        <div class="mode-icon">⚡</div>
+        <div class="mode-name">Push</div>
+      </div>
+      <div class="mode-body">
+        <div class="mode-desc">Both teams fight over a robot (TS-1) that pushes a barricade toward the enemy base. Whoever pushes the barricade furthest when time expires wins.</div>
+        <div class="map-chips">
+          <span class="map-chip">Toronto</span>
+          <span class="map-chip">Esperança</span>
+          <span class="map-chip">Colosseo</span>
+          <span class="map-chip">New Queen St</span>
+        </div>
+      </div>
+    </div>
+    <div class="mode-card">
+      <div class="mode-header">
+        <div class="mode-icon">🔩</div>
+        <div class="mode-name">Flashpoint</div>
+      </div>
+      <div class="mode-body">
+        <div class="mode-desc">A new mode with multiple capture points scattered across large maps. Teams race to hold 3 points first. Encourages spread positioning and flanking.</div>
+        <div class="map-chips">
+          <span class="map-chip">New Junk City</span>
+          <span class="map-chip">Suravasa</span>
+        </div>
+      </div>
+    </div>
+    <div class="mode-card">
+      <div class="mode-header">
+        <div class="mode-icon">🗺️</div>
+        <div class="mode-name">Clash</div>
+      </div>
+      <div class="mode-body">
+        <div class="mode-desc">Five sequential capture points on a mirrored map. Capture the center point first, then push into enemy territory to seize their points. First to 5 wins.</div>
+        <div class="map-chips">
+          <span class="map-chip">Hanaoka</span>
+          <span class="map-chip">Throne of Anubis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== BEGINNER ===================== -->
+<hr class="divider" id="beginner">
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">Beginner's Guide</div>
+    <div class="section-title">New to Overwatch?</div>
+    <p class="section-sub">Get started fast. These fundamentals will make you a better teammate from your very first match.</p>
+  </div>
+
+  <div class="roles-row">
+    <div class="role-card tank">
+      <div class="role-icon">🛡</div>
+      <div class="role-name">Tank</div>
+      <div class="role-desc">Absorb damage and create space for your team. Tanks lead pushes and protect teammates. Great pick if you like being in the center of the action.</div>
+    </div>
+    <div class="role-card damage">
+      <div class="role-icon">⚔️</div>
+      <div class="role-name">Damage</div>
+      <div class="role-desc">Eliminate enemies and apply offensive pressure. Damage heroes have the most variety — from snipers to brawlers. High impact but highly dependent on team support.</div>
+    </div>
+    <div class="role-card support">
+      <div class="role-icon">💚</div>
+      <div class="role-name">Support</div>
+      <div class="role-desc">Keep your team alive and amplify their strengths. Good supports win games quietly. Often the highest-impact role in lower ranks with a strong influence on outcomes.</div>
+    </div>
+  </div>
+
+  <div class="beginner-grid">
+    <div class="tip-card">
+      <div class="tip-num">01</div>
+      <div class="tip-title">Play the Objective</div>
+      <div class="tip-text">Kills don't win games — objectives do. Always ask: where do I need to be to help capture this point or escort this payload? Stay on the objective, even when it's tempting to chase kills.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">02</div>
+      <div class="tip-title">Switch Heroes Mid-Match</div>
+      <div class="tip-text">Overwatch is a game of counters. If your current hero isn't working against the enemy team, change heroes at any spawn. Adapting is a skill — don't stay locked into one pick out of pride.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">03</div>
+      <div class="tip-title">Stick with Your Team</div>
+      <div class="tip-text">Overwatch rewards group play heavily. Lone wolves get picked off. Stay close to at least one teammate, especially your support. Dying alone is the most common mistake new players make.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">04</div>
+      <div class="tip-title">Use Ultimates as a Team</div>
+      <div class="tip-text">Ultimates are most powerful when combined. Communicate in voice or ping before using yours. A Nano Boost into a Primal Rage, or a Sound Barrier covering a Dragon Blade — combos win teamfights.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">05</div>
+      <div class="tip-title">Learn One Hero Per Role</div>
+      <div class="tip-text">Don't try to learn 40 heroes at once. Pick one easy hero per role (Soldier: 76, Reinhardt, Mercy) and build your fundamentals. Game sense carries across all heroes.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">06</div>
+      <div class="tip-title">Use the Practice Range</div>
+      <div class="tip-text">The practice range lets you learn ability timings, test damage numbers, and warm up your aim before matches. Spend 5 minutes there before competitive games to get your mechanics sharp.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <strong>Genji.lol</strong> — A fan-made Overwatch guide. Not affiliated with or endorsed by Blizzard Entertainment. Overwatch is a trademark of Blizzard Entertainment, Inc.
+</footer>
+
+<script>
+const heroData = {
+  reinhardt: {
+    icon: '⚔️', name: 'Reinhardt', role: 'Tank', badge: 'badge-tank',
+    abilities: [
+      { key: 'LMB', name: 'Rocket Hammer', desc: 'A wide melee swing dealing 85 damage per hit. Devastating in close quarters.' },
+      { key: 'RMB', name: 'Barrier Field', desc: 'A massive 1,600 HP frontal shield. Hold to protect your team; release to attack.' },
+      { key: 'SHIFT', name: 'Charge', desc: 'Dash forward at high speed, pinning and killing enemies who hit a wall.' },
+      { key: 'E', name: 'Fire Strike', desc: 'Launch a projectile that pierces enemies, dealing 100 damage each hit. Goes through shields.' },
+      { key: 'Q', name: 'Earthshatter (Ult)', desc: 'Slam the ground, knocking down and stunning all enemies in front of you for 2.5 seconds.' }
+    ],
+    tips: [
+      'Manage your shield HP carefully — it regenerates when not deployed.',
+      'Charge is most effective for pinning enemies against walls or escaping danger.',
+      'Use Fire Strike while charging your shield — it passes through it.',
+      'Position your Earthshatter to hit as many enemies as possible, ideally when they are grouped.',
+      'Stay in the fight as long as possible — your presence is a morale and pressure tool for your team.'
+    ],
+    counters: ['Bastion', 'Pharah', 'Reaper', 'Roadhog', 'Symmetra']
+  },
+  dva: {
+    icon: '🤖', name: 'D.Va', role: 'Tank', badge: 'badge-tank',
+    abilities: [
+      { key: 'LMB', name: 'Fusion Cannons', desc: 'Short-range spread weapons. Deal increasing damage up close but slow movement.' },
+      { key: 'RMB', name: 'Boosters', desc: 'Fly in any direction, knocking back and damaging enemies in your path.' },
+      { key: 'E', name: 'Defense Matrix', desc: 'Shoot down incoming projectiles in a cone in front of you. Counters many ultimates.' },
+      { key: 'SHIFT', name: 'Micro Missiles', desc: 'Launch a barrage of explosive mini-rockets at your target for burst damage.' },
+      { key: 'Q', name: 'Self-Destruct (Ult)', desc: 'Eject and send your mech flying toward enemies. It explodes after a short delay for massive AoE damage.' }
+    ],
+    tips: [
+      'Defense Matrix is your most powerful tool — use it to eat enemy ultimates like Pharah\'s, Soldier\'s, or Junkrat\'s.',
+      'When your mech is destroyed, you become Baby D.Va — survive and shoot to call a new mech.',
+      'Self-Destruct is great for forcing enemies off objectives, even if you don\'t get kills.',
+      'Boosters let you reach high ground fast — use them aggressively to flank or escape.',
+      'Pair Micro Missiles with Fusion Cannons up close for maximum burst damage.'
+    ],
+    counters: ['Zarya', 'Roadhog', 'Symmetra', 'Sombra', 'Wrecking Ball']
+  },
+  sigma: {
+    icon: '🌀', name: 'Sigma', role: 'Tank', badge: 'badge-tank',
+    abilities: [
+      { key: 'LMB', name: 'Hyperspheres', desc: 'Launch two bouncing orbs that deal damage on impact and detonation.' },
+      { key: 'RMB', name: 'Experimental Barrier', desc: 'Deploy a floating barrier anywhere — can be placed at range and repositioned freely.' },
+      { key: 'E', name: 'Kinetic Grasp', desc: 'Absorb incoming projectiles and convert them to personal shields.' },
+      { key: 'SHIFT', name: 'Accretion', desc: 'Hurl a chunk of debris that deals heavy damage and knocks down the target briefly.' },
+      { key: 'Q', name: 'Gravitic Flux (Ult)', desc: 'Lift a group of enemies into the air, then slam them down for massive damage.' }
+    ],
+    tips: [
+      'The barrier is unique — practice placing it at mid-range to cover angles while staying safe.',
+      'Kinetic Grasp counters projectile-heavy enemies like Junkrat, Pharah, and Mei.',
+      'Accretion knocks down targets, making it excellent follow-up after a tank stun or as combo setup.',
+      'Gravitic Flux is best used on grouped enemies — wait for them to cluster before activating.',
+      'Sigma has strong synergy with Ana (Nano Boost) and Zarya (for Graviton + Flux combo).'
+    ],
+    counters: ['Reaper', 'Winston', 'Pharah', 'Roadhog', 'Echo']
+  },
+  winston: {
+    icon: '🦍', name: 'Winston', role: 'Tank', badge: 'badge-tank',
+    abilities: [
+      { key: 'LMB', name: 'Tesla Cannon', desc: 'Short-range electric weapon that deals consistent AoE damage to all nearby enemies — no aiming needed.' },
+      { key: 'RMB', name: 'Tesla Cannon Burst', desc: 'Charge and release a long-range projectile shot for bonus damage.' },
+      { key: 'SHIFT', name: 'Jump Pack', desc: 'Leap long distances, dealing damage on landing. Key mobility and engagement tool.' },
+      { key: 'E', name: 'Barrier Projector', desc: 'Throw a dome barrier that temporarily protects allies inside it.' },
+      { key: 'Q', name: 'Primal Rage (Ult)', desc: 'Transform into a beast with massive HP, infinite Jump Packs, and punching melee attacks.' }
+    ],
+    tips: [
+      'Winston is a dive tank — his job is to leap onto enemy supports and force them off position.',
+      'Barrier Projector is best used to block key sightlines or protect your team during a push.',
+      'Primal Rage is great for disrupting enemy backlines and resetting to full HP.',
+      'Pair Winston with another dive hero (Tracer, Genji, D.Va) for maximum pressure.',
+      'Your Tesla Cannon doesn\'t require aim — focus on positioning over aiming.'
+    ],
+    counters: ['Reaper', 'Bastion', 'Mei', 'Roadhog', 'Zenyatta']
+  },
+  tracer: {
+    icon: '⚡', name: 'Tracer', role: 'Damage', badge: 'badge-damage',
+    abilities: [
+      { key: 'LMB', name: 'Pulse Pistols', desc: 'Twin rapid-fire guns. Very high DPS at close range, much less effective at distance.' },
+      { key: 'SHIFT', name: 'Blink', desc: 'Dash forward 3 charges in any direction. Core mobility tool. Recharges over time.' },
+      { key: 'E', name: 'Recall', desc: 'Rewind time by 3 seconds — restoring HP, position, and ammo. Your get-out-of-jail card.' },
+      { key: 'Q', name: 'Pulse Bomb (Ult)', desc: 'Stick a charged bomb to an enemy. Explodes after a short delay for massive burst damage.' }
+    ],
+    tips: [
+      'Recall is your most important ability — use it to undo burst damage or escape danger.',
+      'Blink charges are precious — don\'t use them all at once unless escaping.',
+      'Tracer excels at killing isolated supports; flank and disrupt the enemy backline.',
+      'Pulse Bomb is most effective against grouped enemies or tanks with no escape.',
+      'You need excellent aim and game sense — great for players who enjoy high-speed, high-skill gameplay.'
+    ],
+    counters: ['McCree', 'Brigitte', 'Mei', 'Roadhog', 'Symmetra']
+  },
+  soldier76: {
+    icon: '🎯', name: 'Soldier: 76', role: 'Damage', badge: 'badge-damage',
+    abilities: [
+      { key: 'LMB', name: 'Heavy Pulse Rifle', desc: 'Mid-range automatic rifle. Accurate when fired in short bursts.' },
+      { key: 'RMB', name: 'Helix Rockets', desc: 'Fire a small rocket cluster for burst damage — great for confirming kills.' },
+      { key: 'SHIFT', name: 'Sprint', desc: 'Run faster. Great for repositioning, chasing enemies, or reaching objectives quicker.' },
+      { key: 'E', name: 'Biotic Field', desc: 'Drop a healing station on the ground that heals you and nearby allies over time.' },
+      { key: 'Q', name: 'Tactical Visor (Ult)', desc: 'Auto-aim on all enemies in sight for full duration — basically can\'t miss for several seconds.' }
+    ],
+    tips: [
+      'Soldier is the best starting hero — his kit teaches core FPS fundamentals.',
+      'Place Biotic Field when in cover, not during a firefight, to maximize healing.',
+      'Helix Rockets are on a short cooldown — use them frequently, not just as a finisher.',
+      'Tactical Visor is best when enemies are grouped and there\'s no cover for them to hide behind.',
+      'Sprint is underutilized — use it constantly to move between positions faster.'
+    ],
+    counters: ['Genji', 'Tracer', 'Widowmaker', 'Pharah', 'Winston']
+  },
+  hanzo: {
+    icon: '🏹', name: 'Hanzo', role: 'Damage', badge: 'badge-damage',
+    abilities: [
+      { key: 'LMB', name: 'Storm Bow', desc: 'Charged arrow that deals 29–125 damage. A full-charge headshot kills most heroes.' },
+      { key: 'SHIFT', name: 'Lunge', desc: 'Quickly jump in any direction. Allows air-dodging and vertical mobility.' },
+      { key: 'E', name: 'Sonic Arrow', desc: 'Fire an arrow that reveals all enemies in a radius on your HUD. Invaluable intel.' },
+      { key: 'Q', name: 'Dragonstrike (Ult)', desc: 'Launch dragon spirits along a path, dealing massive damage to everything they pass through.' }
+    ],
+    tips: [
+      'Always use Sonic Arrow before entering choke points or contested areas.',
+      'Dragonstrike is most effective in narrow corridors or phased through walls at payload objectives.',
+      'Full-charge your arrow whenever possible — half-charged shots rarely kill.',
+      'Lunge can be used mid-air to dodge incoming fire or reach unexpected angles.',
+      'Storm Arrow (scatter shot ability) is fast and great for finishing low-HP targets close up.'
+    ],
+    counters: ['Genji', 'Tracer', 'Winston', 'D.Va', 'Pharah']
+  },
+  pharah: {
+    icon: '🚀', name: 'Pharah', role: 'Damage', badge: 'badge-damage',
+    abilities: [
+      { key: 'LMB', name: 'Rocket Launcher', desc: 'Fires rockets for 120 direct-hit damage or significant splash damage.' },
+      { key: 'RMB', name: 'Concussive Blast', desc: 'Fires a rocket that only knocks back enemies (and yourself) — great for repositioning or pushing enemies off ledges.' },
+      { key: 'SHIFT', name: 'Jump Jet', desc: 'Quickly jet straight up to reach elevated positions.' },
+      { key: 'E', name: 'Hover Jets', desc: 'Hold to hover in the air. Fuel-based — manage your air time carefully.' },
+      { key: 'Q', name: 'Barrage (Ult)', desc: 'Unleash a rapid barrage of rockets in a wide arc. Stay stationary while using.' }
+    ],
+    tips: [
+      'Stay in the air as much as possible — Pharah is vulnerable on the ground.',
+      'Your biggest counters are hitscan heroes (Soldier, Cassidy, Ashe) — switch if they\'re targeting you.',
+      'Pair with Mercy for the classic PharaMercy combo — damage boost makes your rockets devastating.',
+      'Use Concussive Blast to self-propel horizontally or vertically for fast repositioning.',
+      'Barrage behind cover or around a corner — never activate it in the open.'
+    ],
+    counters: ['Soldier: 76', 'Cassidy', 'Ashe', 'Widowmaker', 'Roadhog']
+  },
+  ana: {
+    icon: '💉', name: 'Ana', role: 'Support', badge: 'badge-support',
+    abilities: [
+      { key: 'LMB', name: 'Biotic Rifle', desc: 'A scoped sniper rifle that heals allies it hits and damages enemies.' },
+      { key: 'RMB', name: 'Scope', desc: 'Zoom in for precision aim. Ana is a skillshot healer — you must aim to heal.' },
+      { key: 'SHIFT', name: 'Sleep Dart', desc: 'Fire a dart that puts an enemy to sleep. Sleeping enemies take 2× damage when woken.' },
+      { key: 'E', name: 'Biotic Grenade', desc: 'AoE burst that heals allies and prevents enemies in range from being healed.' },
+      { key: 'Q', name: 'Nano Boost (Ult)', desc: 'Boost a teammate for a burst of extra HP, damage boost, and damage reduction. Extremely powerful.' }
+    ],
+    tips: [
+      'Biotic Grenade\'s anti-heal is devastating against tanks — throw it when enemies are grouped.',
+      'Sleep Dart an ulting enemy (Dragonstrike, Death Blossom, Gravitic Flux) to cancel it.',
+      'Nano Boost is best on Reinhardt, Genji, or Winston for immediate high-impact plays.',
+      'Position at mid-range where you can see allies but stay out of the frontline.',
+      'Ana is hard but extremely rewarding — the highest skill ceiling of any support hero.'
+    ],
+    counters: ['Tracer', 'Genji', 'Sombra', 'Winston', 'Reaper']
+  },
+  lucio: {
+    icon: '🎵', name: 'Lúcio', role: 'Support', badge: 'badge-support',
+    abilities: [
+      { key: 'LMB', name: 'Sonic Amplifier', desc: 'Short-range projectile weapon. Less focused on dealing damage, more on enabling teammates.' },
+      { key: 'RMB', name: 'Soundwave', desc: 'Push enemies and projectiles away. Excellent for knocking enemies off edges.' },
+      { key: 'SHIFT', name: 'Crossfade', desc: 'Switch between Heal Song (passive healing aura) and Speed Song (movement boost aura). Your core utility.' },
+      { key: 'E', name: 'Amp It Up', desc: 'Temporarily amplify your current song — massive burst heal or huge speed boost.' },
+      { key: 'Q', name: 'Sound Barrier (Ult)', desc: 'Apply a large shield (750 HP) to all nearby allies instantly. Best defensive ult in the game.' }
+    ],
+    tips: [
+      'Wall ride constantly — sticking to walls lets you move faster and dodge attacks.',
+      'Use Speed Song for pushes and flanks; switch to Heal Song when your team is taking damage.',
+      'Soundwave can throw enemies off edges — King\'s Row, Ilios Well, and Nepal are great maps for this.',
+      'Sound Barrier should be used just BEFORE enemy ultimates land, not after.',
+      'Your passive healing is weak — you need good positioning and Amp It Up to keep your team alive.'
+    ],
+    counters: ['Sombra', 'Cassidy', 'Ashe', 'Ana', 'Widowmaker']
+  },
+  mercy: {
+    icon: '😇', name: 'Mercy', role: 'Support', badge: 'badge-support',
+    abilities: [
+      { key: 'LMB', name: 'Caduceus Staff — Heal', desc: 'Tether to an ally to heal them 55 HP/sec continuously.' },
+      { key: 'RMB', name: 'Caduceus Staff — Boost', desc: 'Tether to an ally to boost their damage output by 30%. Switch between healing and boosting based on situation.' },
+      { key: 'SHIFT', name: 'Guardian Angel', desc: 'Fly toward a targeted ally at speed. Core mobility and positioning tool.' },
+      { key: 'E', name: 'Caduceus Blaster', desc: 'A small pistol for self-defense. Not a primary weapon but useful for finishing low-HP enemies.' },
+      { key: 'Q', name: 'Valkyrie (Ult)', desc: 'Fly freely, enhance all abilities, chain healing/boosting to multiple allies simultaneously.' }
+    ],
+    tips: [
+      'Guardian Angel\'s Superjump lets you gain huge height — learn the tech by jumping at the right moment.',
+      'Prioritize damage boost on heroes with high burst potential (Pharah, Hanzo, Ashe).',
+      'Avoid healing behind your tank where you\'re hidden — stay mobile and unpredictable.',
+      'Resurrect should mostly be used on teammates who died in a safe position — don\'t rez in the open.',
+      'Mercy is beginner-friendly but has a high skill ceiling in positioning and game sense.'
+    ],
+    counters: ['Sombra', 'Tracer', 'Widowmaker', 'Genji', 'Pharah']
+  },
+  zenyatta: {
+    icon: '🔮', name: 'Zenyatta', role: 'Support', badge: 'badge-support',
+    abilities: [
+      { key: 'LMB', name: 'Orb of Destruction', desc: 'Fire energy orbs for 46 damage each. Charge up to 5 for a simultaneous volley.' },
+      { key: 'RMB', name: 'Orb of Destruction (Charged)', desc: 'Release charged orbs simultaneously for burst damage.' },
+      { key: 'SHIFT', name: 'Orb of Harmony', desc: 'Attach to an ally to heal them 30 HP/sec passively.' },
+      { key: 'E', name: 'Orb of Discord', desc: 'Attach to an enemy, increasing all damage they take by 25%. Extremely powerful debuff.' },
+      { key: 'Q', name: 'Transcendence (Ult)', desc: 'Become invulnerable and heal all nearby allies for 300 HP/sec for 6 seconds.' }
+    ],
+    tips: [
+      'Orb of Discord is your most impactful ability — always have it on the priority target.',
+      'Transcendence counters almost every ultimate in the game — save it for the right moment.',
+      'Zenyatta has no movement abilities — position carefully and stay behind cover.',
+      'You deal significant damage for a support — punish overextended enemies.',
+      'Pair Orb of Discord with your team\'s DPS for extremely fast enemy eliminations.'
+    ],
+    counters: ['Tracer', 'Genji', 'Winston', 'Reaper', 'Sombra']
+  }
+};
+
+const loreData = {
+  crisis: {
+    title: 'The Omnic Crisis & the Birth of Overwatch',
+    content: `<p>About 30 years before the events of Overwatch, the world's automated factories — called <strong>omniums</strong> — suddenly began producing hostile robots. These machines, known as omnics, launched a coordinated military assault across the globe. The war was devastating, and conventional armies struggled against omnic precision and numbers.</p>
+    <p>Facing extinction, the United Nations assembled a small international strike team of enhanced soldiers and specialists. They were given a simple mission: end the crisis. This group became known as <strong>Overwatch</strong>. Under the leadership of <strong>Gabriel Reyes</strong> (later Reaper) and <strong>Jack Morrison</strong> (later Soldier: 76), the team succeeded where armies had failed.</p>
+    <p>Victory made Overwatch famous. The team expanded into a full peacekeeping organization, with Jack Morrison becoming the public face as Strike Commander and Reyes heading covert operations in <strong>Blackwatch</strong>. For decades, Overwatch maintained global peace — protecting civilians, mediating conflicts, and safeguarding both humans and omnics.</p>
+    <p>But internal tensions, political scandal, and a catastrophic explosion at Overwatch's Swiss headquarters led to the organization being officially disbanded by the UN. Years later, a new threat — <strong>Null Sector</strong>, radical omnic extremists — and rising global instability prompt the <strong>recall</strong> of former Overwatch agents that begins the story of the game.</p>`
+  },
+  blackwatch: {
+    title: 'Blackwatch: The Shadow Ops',
+    content: `<p>When Overwatch couldn't operate openly, it used <strong>Blackwatch</strong> — a deniable black ops division led by Gabriel Reyes. Where Overwatch shook hands and attended summits, Blackwatch operated in the shadows: assassinations, extractions, infiltration.</p>
+    <p>Key Blackwatch agents included <strong>Moira O'Deorain</strong> (a controversial geneticist), <strong>Genji Shimada</strong> (a cyborg ninja placed in the organization after Overwatch saved his life from his brother Hanzo), and <strong>Jesse McCree</strong> — later known as Cassidy — recruited directly from a criminal gang called the Deadlock Gang.</p>
+    <p>Over time, Blackwatch's methods grew increasingly brutal. The moral compromises accumulated. Gabriel Reyes grew resentful of Jack Morrison's glory and leadership, believing he deserved the role of Strike Commander. This rivalry, combined with political attacks on Overwatch's legitimacy and leaked Blackwatch missions, created a powder keg.</p>
+    <p>When Reyes and Morrison finally confronted each other directly at the Overwatch headquarters in <strong>Zurich</strong>, an explosion destroyed the facility and both men were believed dead — though both survived, transformed. Morrison became the vigilante Soldier: 76, while Reyes became the undead mercenary <strong>Reaper</strong>, now working for Talon.</p>`
+  },
+  talon: {
+    title: 'Talon: The Terrorist Network',
+    content: `<p><strong>Talon</strong> is a secretive, powerful organization that operates through violence, manipulation, and political leverage. Unlike a simple criminal group, Talon has an ideology: they believe that conflict is the natural and necessary catalyst for human evolution. War, according to Talon, makes humanity stronger.</p>
+    <p>Among their most prominent agents: <strong>Reaper</strong> (Gabriel Reyes, once an Overwatch founder, now a mercenary seeking revenge), <strong>Widowmaker</strong> (Amélie Lacroix, a French agent brainwashed into becoming an assassin after Talon captured and reprogrammed her), and <strong>Doomfist</strong> (Akande Ogundimu, a Nigerian arms magnate and the philosophical leader of Talon's inner council).</p>
+    <p>Talon is not chaotic — it is structured, patient, and strategic. They manipulate governments, fund conflicts, and recruit exceptional individuals. Their goal is to fracture the fragile peace between humans and omnics and provoke a new global war that will, in their view, produce a stronger civilization through "the crucible of conflict."</p>
+    <p>Several heroes have direct history with Talon — including <strong>Sombra</strong>, a hacker who plays all sides, and <strong>Moira</strong>, who continues her research under Talon's patronage.</p>`
+  },
+  omnics: {
+    title: 'Omnics & Sentient Machines',
+    content: `<p>Omnics are sentient robots originally designed for manufacturing and labor. During the Omnic Crisis, they became weapons — but in the aftermath, many omnics achieved a form of spiritual awakening and sought their place in the world alongside humans.</p>
+    <p>The <strong>Shambali</strong> are a monastic order of omnics who believe they have discovered their true purpose through meditation and the path of the <strong>Iris</strong> — their concept of universal connection and meaning. <strong>Zenyatta</strong> is a Shambali monk who wanders the world rather than staying in the monastery, seeking connection with humans directly. His teacher, <strong>Mondatta</strong>, was assassinated by Widowmaker — a pivotal event in the game's lore.</p>
+    <p>The question of omnic rights is central to Overwatch's universe. Some nations have fully integrated omnic citizens. Others still treat omnics as tools or threats. <strong>Numbani</strong> is a city celebrated for human-omnic harmony; <strong>Russia</strong> suffered so badly in the Omnic Crisis that anti-omnic sentiment remains intense.</p>
+    <p><strong>Null Sector</strong> represents the extremist omnic faction — those who believe peaceful coexistence is impossible and pursue violent liberation. Their attacks on London (King's Row) and later incursions across Europe form major story beats in Overwatch's ongoing narrative.</p>`
+  },
+  timeline: {
+    title: 'Key Events Timeline',
+    content: `<p><strong>~30 years before OW present:</strong> The Omnic Crisis begins. Omniums produce hostile machines. Global devastation follows across multiple continents.</p>
+    <p><strong>~28 years before OW present:</strong> The UN forms Overwatch. Gabriel Reyes and Jack Morrison lead the strike team. The crisis ends. Overwatch becomes globally celebrated.</p>
+    <p><strong>~20 years before OW present:</strong> Overwatch expands. Blackwatch is formed under Reyes. More heroes join across both divisions. Tensions grow between Morrison and Reyes. Political investigations begin into Overwatch's conduct.</p>
+    <p><strong>~10 years before OW present:</strong> The Zurich incident. The Overwatch HQ explodes during a confrontation between Reyes and Morrison. Both men are believed dead. The UN passes the Petras Act, disbanding Overwatch and making unauthorized Overwatch activity illegal.</p>
+    <p><strong>~7 years before OW present:</strong> Null Sector attacks King's Row in London. Overwatch agents respond without UN authorization — the incident is covered up but fuels further political backlash.</p>
+    <p><strong>OW present:</strong> Winston, a scientist and former Overwatch agent, sends out a <strong>global recall</strong> to old Overwatch agents after Null Sector attacks escalate worldwide. Heroes must decide whether to answer the call — and whether a new Overwatch can be built in a world that no longer trusts the old one.</p>`
+  }
+};
+
+function filterHeroes(role, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.className = 'filter-btn';
+  });
+  btn.className = 'filter-btn active-' + role;
+  document.querySelectorAll('.hero-card').forEach(card => {
+    if (role === 'all' || card.dataset.role === role) card.classList.remove('hidden');
+    else card.classList.add('hidden');
+  });
+}
+
+function openHero(id) {
+  const h = heroData[id];
+  document.getElementById('mIcon').textContent = h.icon;
+  document.getElementById('mName').textContent = h.name;
+  document.getElementById('mBadge').innerHTML = `<span class="hero-role-badge ${h.badge}">${h.role}</span>`;
+  let body = `<div class="modal-section-title">Abilities</div><div class="ability-list">`;
+  h.abilities.forEach(a => {
+    body += `<div class="ability-item"><div class="ability-key">${a.key}</div><div><div class="ability-name">${a.name}</div><div class="ability-desc">${a.desc}</div></div></div>`;
+  });
+  body += `</div><div class="modal-section-title">Tips & Tricks</div><div class="tips-list">`;
+  h.tips.forEach(t => {
+    body += `<div class="tip-item"><span class="tip-bullet">›</span><span>${t}</span></div>`;
+  });
+  body += `</div><div class="modal-section-title">Watch Out For</div><div class="counter-tags">`;
+  h.counters.forEach(c => {
+    body += `<span class="counter-tag">${c}</span>`;
+  });
+  body += `</div>`;
+  document.getElementById('mBody').innerHTML = body;
+  document.getElementById('heroModal').classList.add('open');
+}
+
+function openLore(id) {
+  const l = loreData[id];
+  document.getElementById('lTitle').textContent = l.title;
+  document.getElementById('lBody').innerHTML = l.content;
+  document.getElementById('loreModal').classList.add('open');
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function closeIfBackdrop(e, id) { if (e.target.id === id) closeModal(id); }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal('heroModal'); closeModal('loreModal');
+  }
+});
+</script>
 </body>
 </html>
